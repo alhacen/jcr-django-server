@@ -147,11 +147,6 @@ REST_FRAMEWORK = {
         'iso-8601']
 }
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'https://justcleanrojgar.aria16.in'
-]
-
 ADMIN_REORDER = [
     {
         'app': 'auth',
@@ -183,3 +178,28 @@ ADMIN_REORDER = [
         )
     },
 ]
+
+CORS_ORIGIN_WHITELIST = [
+    SECRET['REACT_APPLICATIONS']
+]
+
+if SECRET['SERVER']['PRODUCTION']:
+    INSTALLED_APPS += [
+        'storages'
+    ]
+
+    S3 = SECRET['AWS']['S3']
+
+    AWS_ACCESS_KEY_ID = SECRET['AWS']['USER']['ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = SECRET['AWS']['USER']['SECRET_ACCESS_KEY']
+    AWS_STORAGE_BUCKET_NAME = S3['BUCKET_NAME']
+    AWS_QUERYSTRING_AUTH = True
+    STATICFILES_STORAGE = '__jcr__.s3.StaticStorage'
+    DEFAULT_FILE_STORAGE = '__jcr__.s3.MediaStorage'
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+    AWS_S3_REGION_NAME = S3['REGION']
+    AWS_S3_CUSTOM_DOMAIN = SECRET['AWS']['CDN']['PRIMARY']
+    AWS_DEFAULT_ACL = None
+
+    STATIC_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/{S3["STATIC_FOLDER"]}'
+    MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/{S3["MEDIA_FOLDER"]}'
