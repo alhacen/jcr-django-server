@@ -5,6 +5,6 @@ urlpatterns = [
     path('', admin.site.urls),
 ]
 
-admin.site.site_header = "Placement Cell Administration"
-admin.site.site_title = "UPC JMI Admin Portal"
-admin.site.index_title = "University Placement Cell, Jamia Millia Islamia"
+admin.site.site_header = "Just Clean Rojgar Administration"
+admin.site.site_title = "Just Clean Rojgar Admin Portal"
+admin.site.index_title = "Just Clean Rojgar"
