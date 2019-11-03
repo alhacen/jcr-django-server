@@ -144,6 +144,7 @@ REST_FRAMEWORK = {
     'DATE_INPUT_FORMATS': [
         '%Y-%m-%dT%H:%M:%S.000Z',  # Trying this because of ant.design
         '%Y-%m-%dT%H:%M:%S.%Z',
+        '%Y-%m-%dT%H:%M:%S.%f%z',
         'iso-8601']
 }
 

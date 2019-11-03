@@ -1,4 +1,6 @@
 __all__ = ['SeekerAPIView', 'JobAvailableAPIView', 'JobApplyAPIView', 'count_job_view']
+import datetime
+
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
@@ -37,7 +39,10 @@ class SeekerAPIView(SignUpViewBase):
 
         seeker_data = dict(request.data['seeker'])
         self.user.first_name = seeker_data.pop('name').title()
+
         date = seeker_data.pop('dob')
+        date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f%z')
+        self.user.set_password(f'{date.date().day}-{date.date().month}')
         self.user.save()
 
         partner_code = seeker_data.pop('partner_code')
@@ -49,7 +54,7 @@ class SeekerAPIView(SignUpViewBase):
         seeker = Seeker.objects.create(
             **seeker_data,
             job_title=JobTitle.objects.get(title=seeker_data.pop('job_title')),
-            dob=date[:10],
+            dob=date,
             account=self.account,
         )
 
@@ -71,11 +76,11 @@ class JobAvailableAPIView(ListAPIView):
 
         self.queryset = self.queryset \
             .filter(
-                title__title=self.title_job
-            )\
+            title__title=self.title_job
+        ) \
             .exclude(
-                jobapplication__seeker=seeker,
-            )
+            jobapplication__seeker=seeker,
+        )
         return super(JobAvailableAPIView, self).get_queryset()
 
     def get(self, request, *args, **kwargs):
