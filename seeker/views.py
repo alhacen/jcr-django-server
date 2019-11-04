@@ -1,5 +1,5 @@
 __all__ = ['SeekerAPIView', 'JobAvailableAPIView', 'JobApplyAPIView', 'count_job_view']
-import datetime
+from datetime import datetime
 
 from django.utils import timezone
 from rest_framework.response import Response
@@ -40,8 +40,11 @@ class SeekerAPIView(SignUpViewBase):
         seeker_data = dict(request.data['seeker'])
         self.user.first_name = seeker_data.pop('name').title()
 
-        date = seeker_data.pop('dob')[:10]
-        self.user.set_password(f'{date[-2:]}{date[5:7]}')
+        date = seeker_data.pop('dob')
+        date = datetime.strptime(date, '%d-%m-%Y')
+        print(date, '-' * 50)
+
+        self.user.set_password(f'{date.day}{date.month}')
         self.user.save()
 
         partner_code = seeker_data.pop('partner_code')
