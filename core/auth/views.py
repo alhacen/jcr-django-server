@@ -184,6 +184,7 @@ class ForgotPasswordView(OpenAPI):
             otp_generated = self.user.account.otp
             if str(otp_given) == str(signer.unsign(otp_generated, max_age=timedelta(minutes=15))):
                 self.user.set_password(new_password)
+                self.user.save()
                 return response('Password change successful')
 
             return bad_request('Invalid credentials')

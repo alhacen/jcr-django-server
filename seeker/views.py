@@ -44,7 +44,7 @@ class SeekerAPIView(SignUpViewBase):
         date = datetime.strptime(date, '%d-%m-%Y')
         print(date, '-' * 50)
 
-        self.user.set_password(f'{date.day}{date.month}')
+        self.user.set_password(f'{str(date.day).rjust(2, "0")}{str(date.month).rjust(2, "0")}')
         self.user.save()
 
         partner_code = seeker_data.pop('partner_code')
