@@ -149,7 +149,7 @@ class TestRow(object):
 
 def create(row):
     user = User.objects.create_user(
-        username=row.mobile,
+        username=generate_hash('sha256', row.mobile)[:8],
         password=generate_hash('sha256', f"{row.mobile} {datetime.now().__str__()}"),
         email=None
     )
@@ -181,10 +181,12 @@ class Command(BaseCommand):
         ), name_columns_by_row=0)
 
         err_count = 0
+        created = 0
         for i in range(len(sheet)):
             try:
                 x = TestRow(sheet, i)
                 create(x)
+                created += 1
             except Exception as err:
                 print(err)
                 print(sheet[i])
@@ -192,3 +194,4 @@ class Command(BaseCommand):
                 err_count += 1
 
         print('err_count', err_count)
+        print('created', created)
