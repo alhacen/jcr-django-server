@@ -163,6 +163,8 @@ ADMIN_REORDER = [
             {'model': 'employer.Organisation', 'label': 'Organisation'},
             {'model': 'employer.Employer', 'label': 'Employer Accounts'},
             {'model': 'core.Job', 'label': 'Jobs Available'},
+            {'model': 'core.JobTitle', 'label': 'Jobs Title'},
+
         )
     }, {
         'app': 'seeker',
