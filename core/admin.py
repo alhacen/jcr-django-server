@@ -1,8 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from core.models import Job, JobApplication
+from core.models import Job, JobApplication, JobTitle
 from utils.classes import ExportCsvMixin
+
+
+admin.site.register(JobTitle)
 
 
 @admin.register(Job)

@@ -8,20 +8,20 @@ from .validators import pin_code_validator
 class Seeker(models.Model):
     account = models.OneToOneField('core.Account', on_delete=models.CASCADE)
 
-    fathers_name = models.CharField(max_length=49)
-    dob = models.DateField()
-    gender = models.CharField(max_length=1, choices=GenderChoice.choices)
+    fathers_name = models.CharField(max_length=49, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GenderChoice.choices, null=True, blank=True)
 
-    address = models.TextField()
-    city = models.CharField(max_length=255)
-    pin_code = models.CharField(max_length=6, validators=[pin_code_validator])
-    state = models.CharField(choices=STATE_CHOICES, max_length=255)
+    address = models.TextField(null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    pin_code = models.CharField(max_length=6, validators=[pin_code_validator], null=True, blank=True)
+    state = models.CharField(choices=STATE_CHOICES, max_length=255, null=True, blank=True)
 
-    educational_qualification = models.CharField(max_length=255, choices=EDUCATIONAL_QUALIFICATION_CHOICES)
-    experience = models.IntegerField(choices=ExperienceChoices.choices)
+    educational_qualification = models.CharField(max_length=255, choices=EDUCATIONAL_QUALIFICATION_CHOICES, null=True, blank=True)
+    experience = models.IntegerField(choices=ExperienceChoices.choices, null=True, blank=True)
 
-    aadhar = models.CharField(max_length=12)
-    job_title = models.ForeignKey('core.JobTitle', on_delete=models.DO_NOTHING)
+    aadhar = models.CharField(max_length=12, null=True, blank=True)
+    job_title = models.ForeignKey('core.JobTitle', on_delete=models.DO_NOTHING, null=True, blank=True)
 
     @property
     def name(self):
