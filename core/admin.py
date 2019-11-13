@@ -24,10 +24,10 @@ class JobAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin, ExportCsvMixin):
-    list_display = ('application', 'seeker_applied', 'job_applied_for', 'status')
+    list_display = ('application', 'seeker_applied', 'job_applied_for', 'status', 'applied_on')
     list_display_links = ['application']
     actions = ["export_as_csv"]
-    readonly_fields = ('seeker_applied', 'job_applied_for')
+    readonly_fields = ('seeker_applied', 'job_applied_for', 'applied_on')
 
     def application(self, obj):
         return 'View'

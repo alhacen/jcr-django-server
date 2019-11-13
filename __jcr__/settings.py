@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'seeker',
     'employer',
+    'import_export',
     'partner'
 ]
 

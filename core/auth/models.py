@@ -27,6 +27,8 @@ class Account(models.Model):
 
     otp = models.TextField(null=True, blank=True)
 
+
+
     @property
     def is_employer(self):
         return self.type == Account.EMPLOYER
