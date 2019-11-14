@@ -1,9 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
-
+from import_export.admin import ExportActionModelAdmin
 from core.models import Job, JobApplication, JobTitle
 from utils.classes import ExportCsvMixin
-
 
 admin.site.register(JobTitle)
 
@@ -26,10 +25,9 @@ class JobAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 @admin.register(JobApplication)
-class JobApplicationAdmin(admin.ModelAdmin, ExportCsvMixin):
+class JobApplicationAdmin(ExportActionModelAdmin):
     list_display = ('application', 'seeker_applied', 'job_applied_for', 'status', 'applied_on')
     list_display_links = ['application']
-    actions = ["export_as_csv"]
     readonly_fields = ('seeker_applied', 'job_applied_for', 'applied_on')
 
     def application(self, obj):
@@ -44,3 +42,6 @@ class JobApplicationAdmin(admin.ModelAdmin, ExportCsvMixin):
         return format_html(
             f'<a href="/admin/core/job/{obj.job.id}/change/">{obj.job}</a>'
         )
+
+    def has_add_permission(self, request):
+        return False

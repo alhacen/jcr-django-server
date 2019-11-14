@@ -1,16 +1,15 @@
 from django.contrib import admin
 from django.utils.html import format_html
-
+from import_export.admin import ExportActionModelAdmin
 from .models import Organisation, Employer
 from utils.classes import ExportCsvMixin
 
 
 @admin.register(Employer)
-class EmployerAdmin(admin.ModelAdmin, ExportCsvMixin):
+class EmployerAdmin(ExportActionModelAdmin):
     list_display = ('name', 'company', 'designation', 'phone', 'email')
     fields = ('account', 'designation')
     readonly_fields = ('account',)
-    actions = ["export_as_csv"]
 
     def name(self, obj):
         return obj.account.user.get_full_name()
@@ -24,6 +23,9 @@ class EmployerAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     def email(self, obj):
         return obj.account.email
+
+    def has_add_permission(self, request):
+        return False
 
 
 @admin.register(Organisation)

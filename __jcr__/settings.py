@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'core',
     'seeker',
     'employer',
+    'admin_auto_filters',
     'import_export',
     'partner'
+
 ]
 
 MIDDLEWARE = [
