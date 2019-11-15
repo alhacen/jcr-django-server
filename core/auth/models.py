@@ -1,7 +1,7 @@
 __all__ = ['Account']
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.utils import timezone
 from .validators import phone_number_validator
 
 
@@ -20,7 +20,7 @@ class Account(models.Model):
 
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
     type = models.CharField(max_length=1, choices=USER_TYPE)
-
+    created_on = models.DateTimeField(auto_now_add=True)
     phone = models.CharField(max_length=10, validators=[phone_number_validator], unique=True)
     email = models.EmailField(null=True, blank=True, unique=True)
     alternate_phone = models.CharField(max_length=10, validators=[phone_number_validator], null=True, blank=True)
