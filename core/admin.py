@@ -42,6 +42,6 @@ class JobApplicationAdmin(ExportActionModelAdmin):
         return format_html(
             f'<a href="/admin/core/job/{obj.job.id}/change/">{obj.job}</a>'
         )
-
+    
     def has_add_permission(self, request):
         return False
