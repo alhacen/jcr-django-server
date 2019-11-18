@@ -16,6 +16,7 @@ class SeekerAdmin(ExportActionModelAdmin):
     #list_filter = [GenderFilter]
 
     resource_class = SeekerResources
+    date_hierarchy = 'account__created_on'
 
     def mobile(self, instance):
         return instance.account.phone
