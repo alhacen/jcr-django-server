@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Job, JobApplication
+from .models import Job, JobApplication, JobTitle
+
+
+class JobTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobTitle
+        fields = '__all__'
 
 
 class JobSerializer(serializers.ModelSerializer):
