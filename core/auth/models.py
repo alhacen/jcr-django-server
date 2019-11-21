@@ -24,10 +24,8 @@ class Account(models.Model):
     phone = models.CharField(max_length=10, validators=[phone_number_validator], unique=True)
     email = models.EmailField(null=True, blank=True, unique=True)
     alternate_phone = models.CharField(max_length=10, validators=[phone_number_validator], null=True, blank=True)
-    created_on =models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(auto_now_add=True)
     otp = models.TextField(null=True, blank=True)
-
-
 
     @property
     def is_employer(self):

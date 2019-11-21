@@ -14,6 +14,7 @@ class GenderFilter(AutocompleteFilter):
 class SeekerAdmin(ExportActionModelAdmin):
     #search_fields = ['gender']
     #list_filter = [GenderFilter]
+    date_hierarchy = 'account__created_on'
 
     resource_class = SeekerResources
 
