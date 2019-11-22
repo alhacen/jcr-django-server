@@ -3,6 +3,7 @@ from django.utils.html import format_html
 from import_export.admin import ExportActionModelAdmin
 from core.models import Job, JobApplication, JobTitle
 from utils.classes import ExportCsvMixin
+from core.resources import JobApplicationResources
 
 admin.site.register(JobTitle)
 
@@ -29,6 +30,7 @@ class JobApplicationAdmin(ExportActionModelAdmin):
     list_display = ('application', 'seeker_applied', 'job_applied_for', 'status', 'applied_on')
     list_display_links = ['application']
     readonly_fields = ('seeker_applied', 'job_applied_for', 'applied_on')
+    resource_class = JobApplicationResources
 
     def application(self, obj):
         return 'View'

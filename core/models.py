@@ -76,5 +76,7 @@ class JobApplication(models.Model):
     applied_on = models.DateTimeField(auto_now_add=True)
     status_changed = models.DateTimeField(auto_now=True)
 
+    comment = models.TextField(null=True, blank=True)
+
     def __str__(self):
         return f'{self.seeker.account.user.get_full_name()} -> {self.job}'

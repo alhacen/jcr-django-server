@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Seeker
-from admin_auto_filters.filters import AutocompleteFilter
 from import_export.admin import ExportActionModelAdmin
 from .resources import SeekerResources
 
@@ -11,9 +10,9 @@ class GenderFilter(AutocompleteFilter):
     class Meta:
         pass
 """
+
+
 class SeekerAdmin(ExportActionModelAdmin):
-    #search_fields = ['gender']
-    #list_filter = [GenderFilter]
     date_hierarchy = 'account__created_on'
 
     resource_class = SeekerResources
@@ -39,9 +38,6 @@ class SeekerAdmin(ExportActionModelAdmin):
 
     def has_add_permission(self, request):
         return False
-
-    #class Media:
-     #   pass
 
 
 admin.site.register(Seeker, SeekerAdmin)
