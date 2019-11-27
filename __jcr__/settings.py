@@ -38,12 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'admin_reorder',
+    'admin_auto_filters',
+    'import_export',
 
     'core',
     'seeker',
     'employer',
-    'admin_auto_filters',
-    'import_export',
     'partner'
 
 ]

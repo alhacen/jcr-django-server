@@ -1,15 +1,21 @@
 from django.contrib import admin
-from .models import Seeker
-from import_export.admin import ExportActionModelAdmin
-from .resources import SeekerResources
+from django.urls import path
+from django.shortcuts import reverse
 
-"""
-class GenderFilter(AutocompleteFilter):
-    title = 'Gender'
-    field_name = Seeker.gender
-    class Meta:
-        pass
-"""
+from admin_auto_filters.filters import AutocompleteFilter
+from import_export.admin import ExportActionModelAdmin
+
+from .models import Seeker
+from .resources import SeekerResources
+from core.views import JobTitleSearchView
+
+
+class JobTitleFilter(AutocompleteFilter):
+    title = 'Job Types'
+    field_name = 'job_title'
+
+    def get_autocomplete_url(self, request, model_admin):
+        return reverse('admin:seeker_custom_search')
 
 
 class SeekerAdmin(ExportActionModelAdmin):
@@ -22,6 +28,17 @@ class SeekerAdmin(ExportActionModelAdmin):
 
     def created_on(self, instance):
         return instance.account.created_on
+
+    list_filter = (
+        JobTitleFilter,
+    )
+
+    search_fields = (
+        'account', 'fathers_name', 'dob', 'gender',
+        'address', 'city', 'pin_code', 'state',
+        'educational_qualification', 'experience', 'aadhar',
+        'job_title'
+    )
 
     list_display = (
         'name', 'fathers_name', 'gender',
@@ -38,6 +55,14 @@ class SeekerAdmin(ExportActionModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('seeker_custom_search/', self.admin_site.admin_view(JobTitleSearchView.as_view(model_admin=self)),
+                 name='seeker_custom_search'),
+        ]
+        return custom_urls + urls
 
 
 admin.site.register(Seeker, SeekerAdmin)

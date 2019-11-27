@@ -32,4 +32,4 @@ class Seeker(models.Model):
         super(Seeker, self).save(**kwargs)
 
     def __str__(self):
-        return f'{self.account.user.get_full_name()} S/o {self.fathers_name} [Aadhar: {self.aadhar}]'
+        return f'{self.account.user.get_full_name()} S/o {self.fathers_name} [Aadhar: {self.aadhar}; Phone: {self.account.phone}; Email: {self.account.email}]'
