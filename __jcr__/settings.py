@@ -174,7 +174,7 @@ ADMIN_REORDER = [
         'label': 'Seeker',
         'models': (
             {'model': 'seeker.Seeker', 'label': 'Seekers'},
-            {'model': 'core.JobApplication', 'label': 'Job Application'},
+            {'model': 'core.JobApplication', 'label': 'Seeker Job Application'},
         )
     }, {
         'app': 'partner',
