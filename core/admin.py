@@ -6,6 +6,7 @@ from import_export.admin import ExportActionModelAdmin
 from core.models import Job, JobApplication, JobTitle
 from utils.classes import ExportCsvMixin
 from core.resources import JobApplicationResources
+from core.auth.models import Account
 
 
 @admin.register(JobTitle)
@@ -52,3 +53,6 @@ class JobApplicationAdmin(ExportActionModelAdmin):
 
     def has_add_permission(self, request):
         return False
+    
+    
+    admin.site.register(Account)
