@@ -158,6 +158,7 @@ ADMIN_REORDER = [
         'models': (
             'auth.Group',
             {'model': 'auth.User', 'label': 'Users'},
+            {'model': 'core.Account', 'label': 'Accounts'}
         ),
     }, {
         'app': 'employer',
