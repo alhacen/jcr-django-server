@@ -34,10 +34,10 @@ class SeekerAdmin(ExportActionModelAdmin):
     )
 
     search_fields = (
-        'account', 'fathers_name', 'dob', 'gender',
+        'fathers_name', 'dob', 'gender',
         'address', 'city', 'pin_code', 'state',
         'educational_qualification', 'experience', 'aadhar',
-        'job_title'
+        'job_title', 'account__phone'
     )
 
     list_display = (
