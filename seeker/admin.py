@@ -5,7 +5,7 @@ from django.shortcuts import reverse
 from admin_auto_filters.filters import AutocompleteFilter
 from import_export.admin import ExportActionModelAdmin
 
-from .models import Seeker
+from .models import Seeker, SeekerDocuments
 from .resources import SeekerResources
 from core.views import JobTitleSearchView
 
@@ -63,6 +63,17 @@ class SeekerAdmin(ExportActionModelAdmin):
                  name='seeker_custom_search'),
         ]
         return custom_urls + urls
+
+
+@admin.register(SeekerDocuments)
+class SeekerDocumentsAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {'fields': ('title', 'desc')}),
+        ('Embed', {'fields': ('file', 'link', 'embed',)}),
+        ('Filter', {'fields': ('job_title', 'job', 'organisation', 'partner', 'account')}),
+    )
+    filter_horizontal = ('job_title', 'job', 'organisation', 'partner', 'account')
+    list_display = ('title', 'file', 'link', 'embed',)
 
 
 admin.site.register(Seeker, SeekerAdmin)

@@ -1,4 +1,5 @@
-__all__ = ['Seeker']
+__all__ = ['Seeker', 'SeekerDocuments']
+
 from django.db import models
 
 from utils.choices import STATE_CHOICES, EDUCATIONAL_QUALIFICATION_CHOICES, ExperienceChoices, GenderChoice
@@ -17,7 +18,8 @@ class Seeker(models.Model):
     pin_code = models.CharField(max_length=6, validators=[pin_code_validator], null=True, blank=True)
     state = models.CharField(choices=STATE_CHOICES, max_length=255, null=True, blank=True)
 
-    educational_qualification = models.CharField(max_length=255, choices=EDUCATIONAL_QUALIFICATION_CHOICES, null=True, blank=True)
+    educational_qualification = models.CharField(max_length=255, choices=EDUCATIONAL_QUALIFICATION_CHOICES, null=True,
+                                                 blank=True)
     experience = models.IntegerField(choices=ExperienceChoices.choices, null=True, blank=True)
 
     aadhar = models.CharField(max_length=12, null=True, blank=True)
@@ -33,3 +35,22 @@ class Seeker(models.Model):
 
     def __str__(self):
         return f'{self.account.user.get_full_name()} S/o {self.fathers_name} [Aadhar: {self.aadhar}; Phone: {self.account.phone}; Email: {self.account.email}]'
+
+
+class SeekerDocuments(models.Model):
+    title = models.CharField(max_length=255)
+    desc = models.TextField(null=True, blank=True)
+
+    file = models.FileField(null=True, blank=True)
+    embed = models.TextField(null=True, blank=True)
+    link = models.URLField(null=True, blank=True)
+
+    job_title = models.ManyToManyField('core.JobTitle', blank=True)
+    job = models.ManyToManyField('core.Job', blank=True)
+
+    organisation = models.ManyToManyField('employer.Organisation', blank=True)
+    partner = models.ManyToManyField('partner.Partner', blank=True)
+    account = models.ManyToManyField('core.Account', blank=True)
+
+    def __str__(self):
+        return self.title

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Seeker
+from .models import Seeker, SeekerDocuments
 from core.models import JobApplication
 
 
@@ -24,3 +24,9 @@ class SeekerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seeker
         exclude = ('account',)
+
+
+class SeekerDocumentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('title', 'desc', 'file', 'embed', 'link')
+        model = SeekerDocuments

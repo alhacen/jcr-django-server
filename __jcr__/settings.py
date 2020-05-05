@@ -136,6 +136,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Rest framework conf
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -176,6 +179,7 @@ ADMIN_REORDER = [
         'models': (
             {'model': 'seeker.Seeker', 'label': 'Seekers'},
             {'model': 'core.JobApplication', 'label': 'Seeker Job Application'},
+            {'model': 'seeker.SeekerDocuments', 'label': 'Seeker Documents'},
         )
     }, {
         'app': 'partner',
@@ -204,7 +208,7 @@ if SECRET['SERVER']['PRODUCTION']:
     AWS_S3_SIGNATURE_VERSION = 's3v4'
     AWS_S3_REGION_NAME = S3['REGION']
     AWS_S3_CUSTOM_DOMAIN = SECRET['AWS']['CDN']['PRIMARY']
-    # AWS_DEFAULT_ACL = None
+    AWS_DEFAULT_ACL = None
 
-    # STATIC_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/{S3["STATIC_FOLDER"]}'
-    # MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/{S3["MEDIA_FOLDER"]}'
+    STATIC_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/{S3["STATIC_FOLDER"]}'
+    MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/{S3["MEDIA_FOLDER"]}'

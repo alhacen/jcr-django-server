@@ -8,7 +8,8 @@ urlpatterns = [
     path('job/available/', JobAvailableAPIView.as_view(), name='job-available'),
     path('jobs/available/count/', count_job_view, name='job-available-count'),
     path('job/apply/', JobApplyAPIView.as_view(), name='job-applied'),
-    path('job/apply/<int:job_id>/', JobApplyAPIView.as_view(), name='job-apply')
+    path('job/apply/<int:job_id>/', JobApplyAPIView.as_view(), name='job-apply'),
+    path('docs/', DocsListView.as_view(), name='document-view')
 ]
 
 app_name = 'seeker'

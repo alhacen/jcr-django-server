@@ -1,6 +1,8 @@
-__all__ = ['SeekerAPIView', 'JobAvailableAPIView', 'JobApplyAPIView', 'count_job_view']
+__all__ = ['SeekerAPIView', 'JobAvailableAPIView', 'JobApplyAPIView', 'count_job_view', 'DocsListView']
+
 from datetime import datetime
 
+from django.db.models import Q
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
@@ -10,10 +12,12 @@ from utils.classes import FakeModel
 from utils.views import SignUpViewBase
 from utils.api import response
 
-from core.models import Job, JobApplication, JobTitle
+from core.models import Job, JobApplication, JobTitle, Account
+from employer.models import Organisation
 from partner.models import Partner
 from core.serializers import JobSerializer, JobApplicationSerializer
-from .models import Seeker
+from .models import Seeker, SeekerDocuments
+from .serializers import SeekerDocumentsSerializer
 
 
 class SeekerAPIView(SignUpViewBase):
@@ -77,12 +81,8 @@ class JobAvailableAPIView(ListAPIView):
             self.title_job = seeker.job_title
 
         self.queryset = self.queryset \
-            .filter(
-            title__title=self.title_job
-        ) \
-            .exclude(
-            jobapplication__seeker=seeker,
-        )
+            .filter(title__title=self.title_job) \
+            .exclude(jobapplication__seeker=seeker, )
         return super(JobAvailableAPIView, self).get_queryset()
 
     def get(self, request, *args, **kwargs):
@@ -130,3 +130,26 @@ def count_job_view(request):
             jobs_available[title.title] = count
 
     return Response(jobs_available)
+
+
+class DocsListView(ListAPIView):
+    queryset = SeekerDocuments.objects.all()
+    serializer_class = SeekerDocumentsSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        seeker = user.account.seeker
+
+        docs_job_title = JobTitle.objects.filter(id=seeker.job_title_id)
+        docs_job = seeker.jobapplication_set.all()
+        docs_org = Organisation.objects.filter(job__jobapplication__seeker=seeker)
+        docs_partner = Partner.objects.filter(seekers__account=user.account)
+        docs_account = Account.objects.filter(user=user)
+
+        return SeekerDocuments.objects.filter(
+            Q(job_title__in=docs_job_title) |
+            Q(job__jobapplication__in=docs_job) |
+            Q(organisation__in=docs_org) |
+            Q(partner__in=docs_partner) |
+            Q(account__in=docs_account)
+        )
