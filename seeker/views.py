@@ -151,4 +151,4 @@ class DocsListView(ListAPIView):
             Q(organisation__in=docs_org) |
             Q(partner__in=docs_partner) |
             Q(seeker=seeker)
-        )
+        ).distinct()
