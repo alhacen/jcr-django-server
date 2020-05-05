@@ -50,7 +50,7 @@ class SeekerDocuments(models.Model):
 
     organisation = models.ManyToManyField('employer.Organisation', blank=True)
     partner = models.ManyToManyField('partner.Partner', blank=True)
-    account = models.ManyToManyField('core.Account', blank=True)
+    seeker = models.ManyToManyField('seeker.Seeker', blank=True)
 
     def __str__(self):
         return self.title

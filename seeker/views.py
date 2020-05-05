@@ -144,12 +144,11 @@ class DocsListView(ListAPIView):
         docs_job = seeker.jobapplication_set.all()
         docs_org = Organisation.objects.filter(job__jobapplication__seeker=seeker)
         docs_partner = Partner.objects.filter(seekers__account=user.account)
-        docs_account = Account.objects.filter(user=user)
 
         return SeekerDocuments.objects.filter(
             Q(job_title__in=docs_job_title) |
             Q(job__jobapplication__in=docs_job) |
             Q(organisation__in=docs_org) |
             Q(partner__in=docs_partner) |
-            Q(account__in=docs_account)
+            Q(seeker=seeker)
         )

@@ -70,9 +70,9 @@ class SeekerDocumentsAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('title', 'desc')}),
         ('Embed', {'fields': ('file', 'link', 'embed',)}),
-        ('Filter', {'fields': ('job_title', 'job', 'organisation', 'partner', 'account')}),
+        ('Filter', {'fields': ('job_title', 'job', 'organisation', 'partner', 'seeker')}),
     )
-    filter_horizontal = ('job_title', 'job', 'organisation', 'partner', 'account')
+    filter_horizontal = ('job_title', 'job', 'organisation', 'partner', 'seeker')
     list_display = ('title', 'file', 'link', 'embed',)
 
 
