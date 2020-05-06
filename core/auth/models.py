@@ -1,4 +1,5 @@
 __all__ = ['Account']
+
 from django.db import models
 from django.core.exceptions import ValidationError
 
@@ -53,6 +54,16 @@ class Account(models.Model):
         super(Account, self).full_clean(exclude=None, validate_unique=True)
         if self.type == Account.EMPLOYER and not self.email:
             raise ValidationError('Email is required for Employer')
+
+    def account_type(self):
+        if self.is_seeker:
+            self.seeker
+        elif self.is_employer:
+            self.employer
+        else:
+            raise Exception('Invalid login')
+
+        return self.type
 
     def save(self, **kwargs):
         self.full_clean()

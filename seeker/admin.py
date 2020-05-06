@@ -37,7 +37,7 @@ class SeekerAdmin(ExportActionModelAdmin):
         'fathers_name', 'dob', 'gender',
         'address', 'city', 'pin_code', 'state',
         'educational_qualification', 'experience', 'aadhar',
-        'job_title', 'account__phone'
+        'job_title',
     )
 
     list_display = (

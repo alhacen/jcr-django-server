@@ -57,7 +57,7 @@ def user_meta_api_view(request):
         'name': name,
         'email': request.user.account.email,
         'phone': request.user.account.phone,
-        'type': request.user.account.type
+        'type': request.user.account.account_type()
     })
 
 

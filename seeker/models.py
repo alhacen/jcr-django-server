@@ -1,9 +1,13 @@
 __all__ = ['Seeker', 'SeekerDocuments']
 
 from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 from utils.choices import STATE_CHOICES, EDUCATIONAL_QUALIFICATION_CHOICES, ExperienceChoices, GenderChoice
 from .validators import pin_code_validator
+
+from employer.models import Employer
 
 
 class Seeker(models.Model):
@@ -54,3 +58,11 @@ class SeekerDocuments(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@receiver(pre_delete, sender=Seeker)
+def seeker_delete(sender, instance, using, **kwargs):
+    print(instance.account)
+    instance.account.delete()
+    # instance.account.user.delete()
+    # raise Exception('ss')
