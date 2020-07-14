@@ -37,6 +37,10 @@ class Account(models.Model):
         return self.type == Account.SEEKER
 
     @property
+    def is_partner(self):
+        return self.type == Account.PARTNER
+
+    @property
     def company(self):
         try:
             return self.employer.organisation_set.all()[0]
@@ -60,6 +64,8 @@ class Account(models.Model):
             self.seeker
         elif self.is_employer:
             self.employer
+        elif self.is_partner:
+            self.partner
         else:
             raise Exception('Invalid login')
 

@@ -28,7 +28,7 @@ class JobAdmin(admin.ModelAdmin, ExportCsvMixin):
         return obj.organisation.name
 
     def applications(self, obj):
-        return format_html(f'<a href=\'{reverse("admin:core_jobapplication_changelist")}\'>{obj.jobapplication_set.count()}</a>')
+        return format_html(f'<a href=\'{reverse("admin:core_jobapplication_changelist")}?job={obj.pk}\'>{obj.jobapplication_set.count()}</a>')
 
 
 @admin.register(JobApplication)
